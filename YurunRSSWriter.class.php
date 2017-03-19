@@ -123,7 +123,8 @@ class YurunRSSWriter
 				$this->error = "channel 节点缺少 {$nodeName} 子节点数据";
 				return false;
 			}
-			$node = $this->xml->createElement($nodeName,$this->channel[$nodeName]);
+			$node = $this->xml->createElement($nodeName);
+			$node->appendChild($this->xml->createCDATASection($this->channel[$nodeName]));
 			$channelNode->appendChild($node);
 		}
 		// 可选节点处理
@@ -131,7 +132,8 @@ class YurunRSSWriter
 		{
 			if(isset($this->channel[$nodeName]))
 			{
-				$node = $this->xml->createElement($nodeName,$this->channel[$nodeName]);
+				$node = $this->xml->createElement($nodeName);
+				$node->appendChild($this->xml->createCDATASection($this->channel[$nodeName]));
 				$channelNode->appendChild($node);
 			}
 		}
@@ -184,7 +186,8 @@ class YurunRSSWriter
 	 */
 	protected function parseNode($name,$value,$parentNode)
 	{
-		$node = $this->xml->createElement($name,$value);
+		$node = $this->xml->createElement($name);
+		$node->appendChild($this->xml->createCDATASection($value));
 		$parentNode->appendChild($node);
 		return true;
 	}
@@ -204,7 +207,8 @@ class YurunRSSWriter
 		}
 		foreach($category as $category)
 		{
-			$node = $this->xml->createElement('category',$category['name']);
+			$node = $this->xml->createElement('category');
+			$node->appendChild($this->xml->createCDATASection($category['name']));
 			if(isset($category['domain']))
 			{
 				$node->setAttribute('domain',$category['domain']);
@@ -229,7 +233,8 @@ class YurunRSSWriter
 		{
 			$generator = 'YurunPHPRSS';
 		}
-		$node = $this->xml->createElement('generator',$generator);
+		$node = $this->xml->createElement('generator');
+		$node->appendChild($this->xml->createCDATASection($generator));
 		unset($generator);
 		$parentNode->appendChild($node);
 		return true;
@@ -293,7 +298,8 @@ class YurunRSSWriter
 				$this->error = "channel['image'] 节点缺少 {$nodeName} 子节点数据";
 				return false;
 			}
-			$node = $this->xml->createElement($nodeName,$image[$nodeName]);
+			$node = $this->xml->createElement($nodeName);
+			$node->appendChild($this->xml->createCDATASection($image[$nodeName]));
 			$imageNode->appendChild($node);
 		}
 		// 可选节点处理
@@ -301,7 +307,8 @@ class YurunRSSWriter
 		{
 			if(isset($image[$nodeName]))
 			{
-				$node = $this->xml->createElement($nodeName,$image[$nodeName]);
+				$node = $this->xml->createElement($nodeName);
+				$node->appendChild($this->xml->createCDATASection($image[$nodeName]));
 				$imageNode->appendChild($node);
 			}
 		}
@@ -328,7 +335,8 @@ class YurunRSSWriter
 				$this->error = "channel['textInput'] 节点缺少 {$nodeName} 子节点数据";
 				return false;
 			}
-			$node = $this->xml->createElement($nodeName,$textInput[$nodeName]);
+			$node = $this->xml->createElement($nodeName);
+			$node->appendChild($this->xml->createCDATASection($textInput[$nodeName]));
 			$textInputNode->appendChild($node);
 		}
 		return true;
@@ -405,7 +413,8 @@ class YurunRSSWriter
 			{
 				if(isset($item[$node]))
 				{
-					$childNode = $this->xml->createElement($node, $item[$node]);
+					$childNode = $this->xml->createElement($node);
+					$childNode->appendChild($this->xml->createCDATASection($item[$node]));
 					$itemNode->appendChild($childNode);
 				}
 			}
